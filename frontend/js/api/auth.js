@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api';
+import API_URL from '../config. js';
 
 // Registra un nuevo usuario
 export const register = async (name, email, password) => {
