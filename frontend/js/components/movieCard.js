@@ -12,7 +12,7 @@ export function createMovieCardHTML(movie) {
         src="${movie.poster}" 
         alt="${smartCapitalize(movie.title)}"
         class="w-full h-full object-cover"
-        onerror="this.src='https://via.placeholder.com/300x450?text=Sin+Poster'"
+        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3. org/2000/svg%22 width=%22300%22 height=%22450%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22450%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22Arial, sans-serif%22 font-size=%2218%22 fill=%22%236b7280%22%3ESin Póster%3C/text%3E%3C/svg%3E'"
       >
     </div>
     
