@@ -1,6 +1,6 @@
 import { getAuthHeaders } from '../utils/auth.js';
 
-import API_URL from '../config.js';
+import API_URL from '../config';
 
 // Busca películas por título en OMDb
 export const searchMovies = async (title) => {

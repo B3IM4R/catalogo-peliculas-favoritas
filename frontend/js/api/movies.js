@@ -1,6 +1,6 @@
 import { getAuthHeaders } from '../utils/auth.js';
 
-import API_URL from '../config.js';
+import API_URL from '../config';
 
 // Obtiene todas las películas del usuario
 export const getMovies = async () => {

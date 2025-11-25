@@ -1,5 +1,3 @@
-const API_URL = 'http://localhost:3000/api';
-
 // Guarda el token y los datos del usuario en localStorage
 export const saveAuth = (token, user) => {
   localStorage.setItem('token', token);
