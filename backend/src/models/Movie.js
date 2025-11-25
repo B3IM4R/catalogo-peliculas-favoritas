@@ -45,6 +45,7 @@ const movieSchema = new mongoose.Schema(
     // Campo: URL del póster (obtenido de OMDb API)
     poster: {
       type: String,
+      required: [true, 'El póster es obligatorio'],
       default: 'https://via.placeholder.com/300x450?text=Sin+Poster'
     },
     
