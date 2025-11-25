@@ -11,14 +11,31 @@ export const register = async (name, email, password) => {
       body: JSON.stringify({ name, email, password })
     });
 
-    const data = await response.json();
+    // Intentar leer el JSON
+    let data;
+    try {
+      data = await response.json();
+    } catch (jsonError) {
+      throw new Error('Error al procesar la respuesta del servidor');
+    }
 
+    // Verificar si la respuesta es exitosa
     if (!response.ok) {
-      throw new Error(data.message || 'Error al registrar usuario');
+      throw new Error(data.message || `Error ${response.status}: ${response.statusText}`);
+    }
+
+    // Verificar que la respuesta tenga la estructura esperada
+    if (!data.success || !data.data || !data.data.token) {
+      throw new Error('Respuesta del servidor inválida');
     }
 
     return data;
   } catch (error) {
+    // Si es un error de red
+    if (error.message === 'Failed to fetch') {
+      throw new Error('No se pudo conectar con el servidor. Verifica que el backend esté corriendo.');
+    }
+    
     throw error;
   }
 };
@@ -34,14 +51,31 @@ export const login = async (email, password) => {
       body: JSON.stringify({ email, password })
     });
 
-    const data = await response.json();
+    // Intentar leer el JSON
+    let data;
+    try {
+      data = await response.json();
+    } catch (jsonError) {
+      throw new Error('Error al procesar la respuesta del servidor');
+    }
 
+    // Verificar si la respuesta es exitosa
     if (!response.ok) {
-      throw new Error(data.message || 'Error al iniciar sesión');
+      throw new Error(data.message || `Error ${response.status}: ${response.statusText}`);
+    }
+
+    // Verificar que la respuesta tenga la estructura esperada
+    if (!data.success || !data.data || !data.data.token) {
+      throw new Error('Respuesta del servidor inválida');
     }
 
     return data;
   } catch (error) {
+    // Si es un error de red
+    if (error.message === 'Failed to fetch') {
+      throw new Error('No se pudo conectar con el servidor. Verifica que el backend esté corriendo.');
+    }
+    
     throw error;
   }
 };
