@@ -5,6 +5,8 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './config/database.js';
 import authRoutes from './routes/auth.js';
+import movieRoutes from './routes/movies.js';
+import omdbRoutes from './routes/omdb.js';
 
 // Creamos la aplicación de Express
 const app = express();
@@ -25,6 +27,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/movies', movieRoutes);
+app.use('/api/omdb', omdbRoutes);
 
 const startServer = async () => {
   try {
