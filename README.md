@@ -1,24 +1,55 @@
-# Catálogo de Películas Favoritas
+# 🎬 Catálogo de Películas Favoritas
 
-Proyecto FullStack sencillo para gestionar un catálogo personal de películas favoritas con autenticación de usuarios y obtención de pósters desde la API pública OMDb.
+Aplicación web fullstack para gestionar tu catálogo personal de películas favoritas con autenticación de usuarios e integración con la API de OMDb. 
 
-## Objetivo
-Aprender y demostrar fundamentos: REST API con Express, conexión a MongoDB Atlas, autenticación JWT básica, CRUD de recursos, consumo de API externa y un frontend en JavaScript vanilla con estilos usando Tailwind (CDN) sin complicaciones.
+---
 
-## Variables de entorno (se crearán posteriormente)
-- `PORT`: Puerto de la API (3000).
-- `MONGODB_URI`: Cadena de conexión completa de Atlas.
-- `JWT_SECRET`: Clave para firmar JWT (usa algo largo y aleatorio).
-- `OMDB_API_KEY`: Key obtenida de https://www.omdbapi.com/apikey.aspx.
+## 📋 Objetivo
 
-## Despliegue en Render (visión general)
-1. Crear nuevo servicio Web en Render apuntando al repo.
-2. Añadir variables de entorno en Dashboard de Render.
-3. Comando inicial: `pnpm install` y `pnpm start`.
-4. Verificar logs y probar endpoints.
+Demostrar el desarrollo de una aplicación web moderna con:
+- Backend REST API (Node.js + Express + MongoDB)
+- Autenticación JWT
+- Integración con API externa (OMDb)
+- Frontend responsive (JavaScript Vanilla + Tailwind CSS)
+- Despliegue en producción (Render + GitHub Pages)
 
-## Convención de commits
-- `feat:` nuevo feature (endpoint, modelo, servicio).
-- `refactor:` reorganización sin cambiar comportamiento externo.
-- `docs:` cambios en documentación o comentarios.
-- `test:` archivos o ajustes de pruebas.
+## 🚀 Tecnologías
+
+### Backend
+- **Node. js** + **Express** - Servidor y API REST
+- **MongoDB Atlas** - Base de datos en la nube
+- **JWT** - Autenticación segura
+- **OMDb API** - Obtención de información de películas
+
+### Frontend
+- **JavaScript Vanilla** - Sin frameworks
+- **Tailwind CSS** - Diseño responsive
+- **Fetch API** - Consumo de servicios REST
+
+### Despliegue
+- **Backend**: Render
+- **Frontend**: GitHub Pages
+
+---
+
+## ✨ Funcionalidades
+
+- ✅ Registro e inicio de sesión de usuarios
+- ✅ Gestión completa de películas (CRUD)
+- ✅ Búsqueda de películas en OMDb API
+- ✅ Catálogo personal con pósters
+- ✅ Validación de datos en backend y frontend
+- ✅ Interfaz responsive y moderna
+
+---
+
+## 🌐 Demo en Vivo
+
+- **Frontend**: [https://b3im4r.github.io/catalogo-peliculas-favoritas/](https://b3im4r.github.io/catalogo-peliculas-favoritas/)
+- **Backend API**: [https://catalogo-peliculas-api.onrender. com](https://catalogo-peliculas-api.onrender. com)
+
+---
+
+## 👨‍💻 Autor
+
+**B3IM4R**
