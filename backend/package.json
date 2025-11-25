@@ -9,7 +9,7 @@
     "start": "node src/app.js"
   },
   "keywords": ["movies", "api", "express", "mongodb"],
-  "author": "Tu Nombre",
+  "author": "B3IM4R",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
