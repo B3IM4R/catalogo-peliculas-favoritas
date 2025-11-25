@@ -4,6 +4,40 @@ import { getUser, logout, requireAuth } from './utils/auth.js';
 import { validateMovieData, validateGenre, getGenreErrorMessage } from './utils/validators.js';
 import { renderMovies, addMovieToGrid } from './components/movieCard.js';
 
+// Verificar autenticación
+requireAuth();
+
+// Elementos del navbar
+const dropdownUserName = document.getElementById('dropdownUserName');
+const dropdownUserEmail = document.getElementById('dropdownUserEmail');
+const accountDropdownBtn = document.getElementById('accountDropdownBtn');
+const accountDropdownMenu = document.getElementById('accountDropdownMenu');
+const logoutBtnDropdown = document.getElementById('logoutBtnDropdown');
+
+// Elementos del DOM
+const loadingState = document.getElementById('loadingState');
+const emptyState = document.getElementById('emptyState');
+const moviesGrid = document.getElementById('moviesGrid');
+
+// Modal y formulario de agregar
+const addModal = document.getElementById('addModal');
+const addMovieBtn = document.getElementById('addMovieBtn');
+const addMovieBtnEmpty = document.getElementById('addMovieBtnEmpty');
+const cancelAddBtn = document.getElementById('cancelAddBtn');
+const addForm = document.getElementById('addForm');
+
+// Inputs del formulario de agregar
+const addTitleInput = document.getElementById('addTitle');
+const addYearInput = document.getElementById('addYear');
+const addDirectorInput = document.getElementById('addDirector');
+const addGenreInput = document.getElementById('addGenre');
+const addPlotInput = document.getElementById('addPlot');
+
+// Mensajes del formulario de agregar
+const titleValidation = document.getElementById('titleValidation');
+const addErrorMessage = document.getElementById('addErrorMessage');
+const addSuccessMessage = document.getElementById('addSuccessMessage');
+
 // Modal de detalles
 const detailsModal = document.getElementById('detailsModal');
 const closeDetailsBtn = document.getElementById('closeDetailsBtn');
@@ -21,45 +55,30 @@ const detailsGenre = document.getElementById('detailsGenre');
 const detailsPlot = document.getElementById('detailsPlot');
 const detailsErrorMessage = document.getElementById('detailsErrorMessage');
 
-// Verificar autenticación
-requireAuth();
-
-// Elementos del DOM
-const userName = document.getElementById('userName');
-const logoutBtn = document.getElementById('logoutBtn');
-const loadingState = document.getElementById('loadingState');
-const emptyState = document.getElementById('emptyState');
-const moviesGrid = document.getElementById('moviesGrid');
-
-// Modal y formulario de agregar
-const addModal = document.getElementById('addModal');
-const addMovieBtn = document.getElementById('addMovieBtn');
-const addMovieBtnEmpty = document.getElementById('addMovieBtnEmpty');
-const cancelAddBtn = document.getElementById('cancelAddBtn');
-const addForm = document.getElementById('addForm');
-
-// Inputs del formulario
-const addTitleInput = document.getElementById('addTitle');
-const addYearInput = document.getElementById('addYear');
-const addDirectorInput = document.getElementById('addDirector');
-const addGenreInput = document.getElementById('addGenre');
-const addPlotInput = document.getElementById('addPlot');
-
-// Mensajes
-const titleValidation = document.getElementById('titleValidation');
-const addErrorMessage = document.getElementById('addErrorMessage');
-const addSuccessMessage = document.getElementById('addSuccessMessage');
-
 // Estado de validación
 let validatedImdbID = null;
 let searchTimeout = null;
 
-// Inicialización
+// Inicialización del navbar
 const user = getUser();
-userName.textContent = user.name;
+dropdownUserName.textContent = user.name;
+dropdownUserEmail.textContent = user.email;
 
-// Event listeners
-logoutBtn.addEventListener('click', logout);
+// Event listeners del navbar
+logoutBtnDropdown.addEventListener('click', logout);
+
+accountDropdownBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  accountDropdownMenu.classList.toggle('hidden');
+});
+
+document.addEventListener('click', (e) => {
+  if (!accountDropdownBtn.contains(e.target) && !accountDropdownMenu.contains(e.target)) {
+    accountDropdownMenu.classList.add('hidden');
+  }
+});
+
+// Event listeners de agregar película
 addMovieBtn.addEventListener('click', openAddModal);
 if (addMovieBtnEmpty) {
   addMovieBtnEmpty.addEventListener('click', openAddModal);
@@ -68,10 +87,10 @@ cancelAddBtn.addEventListener('click', closeAddModal);
 addModal.addEventListener('click', (e) => {
   if (e.target === addModal) closeAddModal();
 });
-
 addTitleInput.addEventListener('blur', validateTitle);
 addForm.addEventListener('submit', handleAddMovie);
 
+// Event listeners del modal de detalles
 closeDetailsBtn.addEventListener('click', closeDetailsModal);
 cancelDetailsBtn.addEventListener('click', closeDetailsModal);
 deleteMovieBtn.addEventListener('click', handleDeleteMovie);
@@ -149,6 +168,7 @@ function openAddModal() {
   addErrorMessage.classList.add('hidden');
   addSuccessMessage.classList.add('hidden');
   addModal.classList.remove('hidden');
+  lockBodyScroll();
 }
 
 /**
@@ -159,6 +179,7 @@ function closeAddModal() {
   addForm.reset();
   validatedImdbID = null;
   titleValidation.classList.add('hidden');
+  unlockBodyScroll();
 }
 
 /**
@@ -177,7 +198,7 @@ async function validateTitle() {
     clearTimeout(searchTimeout);
   }
 
-  titleValidation.innerHTML = '<span class="text-gray-500 text-sm">🔍 Buscando en OMDb...</span>';
+  titleValidation.innerHTML = '<span class="text-gray-500 text-sm"> Buscando en OMDb...</span>';
   titleValidation.classList.remove('hidden');
 
   try {
@@ -185,7 +206,7 @@ async function validateTitle() {
     const movies = response.data;
 
     if (movies.length === 0) {
-      titleValidation.innerHTML = '<span class="text-orange-600 text-sm">⚠️ No se encontró en OMDb. Verifica el título en inglés.</span>';
+      titleValidation.innerHTML = '<span class="text-orange-600 text-sm"> No se encontró en OMDb. Verifica el título en inglés.</span>';
       validatedImdbID = null;
       return;
     }
@@ -193,11 +214,11 @@ async function validateTitle() {
     const movie = movies[0];
     validatedImdbID = movie.imdbID;
 
-    titleValidation.innerHTML = `<span class="text-green-600 text-sm font-medium">✅ Película encontrada: ${movie.Title} (${movie.Year})</span>`;
+    titleValidation.innerHTML = `<span class="text-green-600 text-sm font-medium"> Película encontrada: ${movie.Title} (${movie.Year})</span>`;
 
   } catch (error) {
     console.error('Error al validar título:', error);
-    titleValidation.innerHTML = '<span class="text-red-600 text-sm">❌ Error al buscar en OMDb</span>';
+    titleValidation.innerHTML = '<span class="text-red-600 text-sm"> Error al buscar en OMDb</span>';
     validatedImdbID = null;
   }
 }
@@ -236,7 +257,7 @@ async function handleAddMovie(e) {
     const newMovie = response.data;
 
     // Mostrar mensaje de éxito
-    addSuccessMessage.textContent = '✅ ¡Película agregada exitosamente!';
+    addSuccessMessage.textContent = '¡Película agregada exitosamente!';
     addSuccessMessage.classList.remove('hidden');
 
     // Agregar la película al grid sin recargar
@@ -286,6 +307,7 @@ async function openDetailsModal(movieId) {
 
     detailsErrorMessage.classList.add('hidden');
     detailsModal.classList.remove('hidden');
+    lockBodyScroll();
 
   } catch (error) {
     console.error('Error al obtener película:', error);
@@ -300,6 +322,7 @@ function closeDetailsModal() {
   detailsModal.classList.add('hidden');
   detailsForm.reset();
   detailsErrorMessage.classList.add('hidden');
+  unlockBodyScroll();
 }
 
 /**
@@ -361,7 +384,7 @@ async function handleUpdateMovie(e) {
     await loadMovies();
     
     // Mostrar notificación de éxito
-    showSuccessNotification('✅ Película actualizada exitosamente');
+    showSuccessNotification('Película actualizada exitosamente');
 
   } catch (error) {
     console.error('Error al actualizar película:', error);
@@ -389,7 +412,7 @@ async function handleDeleteMovie() {
     await loadMovies();
 
     // Mostrar notificación de éxito
-    showSuccessNotification('🗑️ Película eliminada exitosamente');
+    showSuccessNotification('Película eliminada exitosamente');
 
   } catch (error) {
     console.error('Error al eliminar película:', error);
@@ -433,6 +456,20 @@ function showErrorNotification(message) {
       notification.remove();
     }, 300);
   }, 4000);
+}
+
+/**
+ * Bloquea el scroll del body
+ */
+function lockBodyScroll() {
+  document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Desbloquea el scroll del body
+ */
+function unlockBodyScroll() {
+  document.body.style.overflow = '';
 }
 
 /**
