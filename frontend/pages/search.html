@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔍 OMDb API</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="bg-gray-50">
+  
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        
+        <!-- Logo -->
+        <div class="flex items-center space-x-2">
+          <span class="text-3xl">🎬</span>
+          <h1 class="text-xl font-bold text-gray-800">OMDb API</h1>
+        </div>
+
+        <!-- Menu de navegación -->
+        <div class="flex items-center space-x-6">
+          
+          <!-- Link: Catálogo -->
+          <a href="./catalog.html" class="text-gray-700 font-medium hover:text-blue-600 transition-colors">
+            📚 Catálogo
+          </a>
+
+          <!-- Link: Buscar (ACTIVO) -->
+          <a href="./search.html" class="text-blue-600 font-semibold hover:text-blue-700 transition-colors border-b-2 border-blue-600">
+            🔍 Buscar en OMDb
+          </a>
+
+          <!-- Dropdown: Cuenta -->
+          <div class="relative">
+            <button id="accountDropdownBtn" class="flex items-center space-x-2 text-gray-700 font-medium hover:text-blue-600 transition-colors">
+              <span>👤 Cuenta</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="accountDropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+              <div class="px-4 py-2 border-b border-gray-100">
+                <p class="text-sm font-semibold text-gray-800" id="dropdownUserName"></p>
+                <p class="text-xs text-gray-500" id="dropdownUserEmail"></p>
+              </div>
+              
+              <button id="logoutBtnDropdown" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-2">
+                <span>🚪</span>
+                <span>Cerrar Sesión</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    
+    <!-- Header -->
+    <div class="mb-8">
+      <h2 class="text-3xl font-bold text-gray-800 mb-2">Buscar Películas</h2>
+      <p class="text-gray-600">Busca películas en OMDb y agrégalas a tu catálogo</p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+      <form id="searchForm" class="flex gap-4">
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Buscar por título (ej: Inception, Matrix, Interstellar...)"
+          required
+          minlength="2"
+          class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+        >
+        <button 
+          type="submit" 
+          class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg transition-colors font-semibold text-lg"
+        >
+          🔍 Buscar
+        </button>
+      </form>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="hidden flex justify-center items-center py-20">
+      <div class="spinner"></div>
+      <span class="ml-3 text-gray-600">Buscando películas...</span>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="hidden bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
+    </div>
+
+    <!-- Initial State -->
+    <div id="initialState" class="text-center py-20">
+      <span class="text-6xl mb-4 block">🔍</span>
+      <h3 class="text-2xl font-bold text-gray-800 mb-2">Busca tus películas favoritas</h3>
+      <p class="text-gray-600">Escribe el título de una película en el buscador</p>
+    </div>
+
+    <!-- Search Results Grid -->
+    <div id="resultsGrid" class="hidden">
+      <h3 class="text-xl font-bold text-gray-800 mb-4">
+        Resultados de búsqueda: <span id="searchTerm" class="text-blue-600"></span>
+      </h3>
+      <div id="moviesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Las películas se cargarán dinámicamente aquí -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal de detalles de película -->
+  <div id="detailsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-screen overflow-y-auto fade-in">
+        <div class="p-8">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-2xl font-bold text-gray-800">Detalles de la Película</h3>
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl">✕</button>
+        </div>
+        
+        <div id="modalContent">
+            <!-- El contenido se cargará dinámicamente -->
+        </div>
+        </div>
+    </div>
+  </div>
+
+  <script type="module" src="../js/search.js"></script>
+</body>
+</html>
