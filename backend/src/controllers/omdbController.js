@@ -78,7 +78,7 @@ export const getMovieDetails = async (req, res) => {
       year: parseInt(response.data.Year),
       director: response.data.Director,
       genre: response.data.Genre,
-      poster: response.data.Poster !== 'N/A' ? response.data.Poster : 'https://via.placeholder.com/300x450?text=Sin+Poster',
+      poster: response.data.Poster !== 'N/A' ? response.data.Poster : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="450"%3E%3Crect fill="%23e5e7eb" width="300" height="450"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="%236b7280"%3ESin Póster%3C/text%3E%3C/svg%3E',
       imdbID: response.data.imdbID,
       plot: response.data.Plot !== 'N/A' ? response.data.Plot : ''
     };

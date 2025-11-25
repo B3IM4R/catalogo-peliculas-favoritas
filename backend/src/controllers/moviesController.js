@@ -99,7 +99,7 @@ export const createMovie = async (req, res) => {
       });
       
       if (omdbResponse.data.Response === 'True' && omdbResponse.data.Poster !== 'N/A') {
-        poster = omdbResponse.data.Poster;
+        poster = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="450"%3E%3Crect fill="%23e5e7eb" width="300" height="450"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="%236b7280"%3ESin Póster%3C/text%3E%3C/svg%3E';
       }
     } catch (omdbError) {
       console.error('Error al obtener póster de OMDb:', omdbError.message);
