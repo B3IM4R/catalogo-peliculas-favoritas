@@ -1,0 +1,24 @@
+{
+  "name": "catalogo-peliculas-backend",
+  "version": "1.0.0",
+  "description": "Backend para catálogo de películas favoritas",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/app.js",
+    "start": "node src/app.js"
+  },
+  "keywords": ["movies", "api", "express", "mongodb"],
+  "author": "Tu Nombre",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0",
+    "dotenv": "^16.3.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "express-validator": "^7.0.1",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5"
+  }
+}
