@@ -34,7 +34,7 @@ export function createMovieCardHTML(movie) {
           onclick="window.viewMovieDetails('${movie._id}')"
           class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors font-medium text-sm"
         >
-          👁️ Ver Detalles
+          Ver Detalles
         </button>
       </div>
     </div>
